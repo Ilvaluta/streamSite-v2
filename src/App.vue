@@ -5,6 +5,7 @@
     <Highlights/>
     <Giveaway/>
     <Donation/>
+    <Sponsors/>
   </div>
 </template>
 
@@ -13,6 +14,7 @@ import Vods from './components/Vods'
 import Highlights from './components/Highlights'
 import Giveaway from './components/Giveaway'
 import Donation from './components/Donation'
+import Sponsors from './components/Sponsors'
 
 export default {
   name: 'App',
@@ -20,7 +22,8 @@ export default {
     Vods,
     Highlights,
     Giveaway,
-    Donation
+    Donation,
+    Sponsors
   }
 }
 </script>
