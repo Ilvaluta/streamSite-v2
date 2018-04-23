@@ -1,0 +1,56 @@
+function getHighlights() {
+  $.ajax({
+    url: `https://api.twitch.tv/kraken/channels/${settings.twitchUsername}/videos?highlights=true&limit=${settings.numberOfVideos}`,
+    data: { client_id: 'sy8t405is27qepl3jf8j7by99b3wo5k', },
+  }).done(highlights => {
+    $.each(highlights.videos, (i, item) => {
+      $('.highlights').append(`
+          <div class="video col-md-3 col-12">
+            <a href="${item.url}">
+              <img src="${item.preview}" class="img-fluid">
+            </a>
+            <a class="video-text" href="${item.url}"><p>${item.title}</p></a><div class="video-date">${getDate(item.recorded_at)}</div></div>
+          `);
+    });
+  });
+}
+
+function getBroadcasts() {
+  //JSON request to grab information about the recent broadcasts
+  $.ajax({
+    url: `https://api.twitch.tv/kraken/channels/${settings.twitchUsername}/videos?broadcasts=true&limit=${settings.numberOfVideos}`,
+    data: {
+      client_id: 'sy8t405is27qepl3jf8j7by99b3wo5k',
+    },
+  }).done(broadcasts => {
+    $.each(broadcasts.videos, (i, item) => {
+        $('.broadcasts').append(`
+          <div class="video col-md-3 col-12">
+            <a href="${item.url}">
+              <img src="${item.preview}" class="img-fluid">
+            </a>
+            <a class="video-text" href="${item.url}"><p>${item.title}</p></a><div class="video-date">${getDate(item.recorded_at)}</div></div>
+          `);
+      }),
+
+      // JSON request to see if stream is online
+      $.ajax({
+        url: `https://api.twitch.tv/kraken/streams/${settings.twitchUsername}`,
+        data: {
+          client_id: 'sy8t405is27qepl3jf8j7by99b3wo5k',
+        },
+      }).done(live => {
+        if (live.stream == null) {
+          streaminfo.html(`
+                    <a href="http://twitch.tv/${settings.twitchUsername}"><span class="offlinetext">Offline (Go to channel)</span></a>
+                    <a href="${broadcasts.videos[0].url}" target="_blank">
+                      <img src="${broadcasts.videos[0].preview}" class="statusThumbnail">
+                    </a>`);
+        } else {
+          streaminfo.html(`<a href="http://twitch.tv/${settings.twitchUsername}"><span class="onlinetext">Online</span></a>
+                    <img src="${live.stream.preview.medium}" class="statusThumbnail">
+                  <p>Viewers : ${live.stream.viewers} | Playing : ${live.stream.game}</p>`);
+        }
+      });
+  });
+}
