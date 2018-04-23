@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+    <Header/>
     <Vods/>
     <Highlights/>
     <Giveaway/>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Header from './components/Header'
 import Vods from './components/Vods'
 import Highlights from './components/Highlights'
 import Giveaway from './components/Giveaway'
@@ -19,6 +20,7 @@ import Sponsors from './components/Sponsors'
 export default {
   name: 'App',
   components: {
+    Header,
     Vods,
     Highlights,
     Giveaway,
@@ -35,6 +37,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
 }
+
+/* Temporary fix to get Header to the top of page for now */
+* {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 </style>
