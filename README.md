@@ -1,21 +1,22 @@
-# streamsite
+# streamsite v2
 
-> A Vue.js project
+> A website for streamers to use as their personal website
 
-## Build Setup
+Currently recreating the whole thing using vue.js and using express.js and MongoDB for the backend.
 
-``` bash
-# install dependencies
-npm install
+## To do list
 
-# serve with hot reload at localhost:8080
-npm run dev
+### Front-end
 
-# build for production with minification
-npm run build
+- [ ] Basic functionality of all components
+- [ ] Basic styles of all components
+- [ ] Use data from backend
+- [ ] Fix inevitable errors
+- [ ] Get design as mobile friendly as possible
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+### Back-end
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- [ ] Create basic admin page design
+- [ ] All requests working with db
+- [ ] Something
+- [ ] Something
