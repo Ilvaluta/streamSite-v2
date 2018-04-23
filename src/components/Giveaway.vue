@@ -2,14 +2,14 @@
   <div class="giveaways">
     <h1>Giveaways</h1>
       <div class="giveaway">
-        <div v-html="ga"></div>
+        <a class="e-widget no-button" :href="ga" rel="nofollow">Your Giveaway</a>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Highlights',
+  name: 'Giveaway',
   data () {
     return {
       ga: ''
@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     showGiveaway(){
-        this.ga = `<a class="e-widget no-button" href="https://gleam.io/6FH24/your-giveaway" rel="nofollow">Your Giveaway</a>`
+        this.ga = `https://gleam.io/6FH24/your-giveaway`
     }
   },
   created: function(){
