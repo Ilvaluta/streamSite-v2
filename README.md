@@ -1,4 +1,4 @@
-# streamsite v2
+# streamsite v2 - Frontend
 
 > A website for streamers to use as their personal website
 
@@ -13,10 +13,3 @@ Currently recreating the whole thing using vue.js and using express.js and Mongo
 - [ ] Use data from backend
 - [ ] Fix inevitable errors
 - [ ] Get design as mobile friendly as possible
-
-### Back-end
-
-- [ ] Create basic admin page design
-- [ ] All requests working with db
-- [ ] Something
-- [ ] Something
