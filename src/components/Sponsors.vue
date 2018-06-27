@@ -1,5 +1,5 @@
 <template>
-  <div class="sponsors">
+  <div class="sponsors" v-show="show">
     <h1>My Sponsors</h1>
     <div v-for="sponsor in s" class="wrapper">
       <div class="sponsor">
@@ -14,25 +14,26 @@ export default {
   name: 'Sponsors',
   data () {
     return {
-      s: [
-        {url: '#', img: 'http://via.placeholder.com/150x150'},
-        {url: '#', img: 'http://via.placeholder.com/150x150'},
-        {url: '#', img: 'http://via.placeholder.com/150x150'}
-      ]
+      show: '',
+      s: []
     }
   },
-  // To be used when backend is set up
-  // methods: {
-  //   fetchSponsors(){
-  //     this.$http.get('')
-  //       .then(function(response){
-  //       this.s =
-  //       });
-  //   }
-  // },
-  // created: function(){
-  //   this.fetchSponsors()
-  // }
+  methods: {
+    fetchSponsors(){
+      this.$http.get('http://streamsiteb/api/streamer/1').then(function(response){
+        if(response.body.sponsors === 'true'){
+          this.show = false;
+      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId+'/sponsors')
+        .then(function(response){
+        this.s = response.body;
+        });
+      }
+    });
+    }
+  },
+  created: function(){
+    this.fetchSponsors()
+  }
 }
 </script>
 

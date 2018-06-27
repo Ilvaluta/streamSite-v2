@@ -17,6 +17,7 @@ import Giveaway from './components/Giveaway'
 import Donation from './components/Donation'
 import Sponsors from './components/Sponsors'
 
+
 export default {
   name: 'App',
   components: {
@@ -45,6 +46,30 @@ export default {
   margin-top: 0;
   margin-left: 0;
   margin-right: 0;
+}
+.video {
+  padding: 0 16px 0 16px;
+}
+
+.video > a > img {
+  border-right: 16px solid black;
+  border-left: 16px solid black;
+}
+
+.video-wrapper {
+  display: inline-block;
+}
+
+.video-title {
+  margin-top: -8px;
+  background: purple;
+  color: white;
+  text-shadow: 1px 1px black;
+  max-width: 352px;
+}
+
+.video-title > h4 {
+  padding: 8px;
 }
 
 </style>

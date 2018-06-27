@@ -6,7 +6,8 @@ import VueResource from 'vue-resource'
 
 Vue.use(VueResource);
 
-Vue.config.productionTip = false
+Vue.prototype.$clientId = 'sy8t405is27qepl3jf8j7by99b3wo5k'
+Vue.prototype.$streamerId = '1'
 
 /* eslint-disable no-new */
 new Vue({
