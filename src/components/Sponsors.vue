@@ -20,9 +20,9 @@ export default {
   },
   methods: {
     fetchSponsors(){
-      this.$http.get('http://streamsiteb/api/streamer/1').then(function(response){
+      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId).then(function(response){
         if(response.body.sponsors === 'true'){
-          this.show = false;
+          this.show = true;
       this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId+'/sponsors')
         .then(function(response){
         this.s = response.body;

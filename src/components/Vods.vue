@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     fetchVods(t, num){
-      this.$http.get('http://streamsiteb/api/streamer/1')
+      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
       .then(function(res) {
       if(res.body.vods === 'true') {
         this.show = true;
@@ -38,7 +38,7 @@ export default {
     }
   },
   created: function(){
-    this.fetchVods('quin69', 3)
+    this.fetchVods(this.$twitch, 4)
   }
 }
 </script>
@@ -47,5 +47,10 @@ export default {
 <style scoped>
 .vods {
   margin-top: 16px;
+  background: #333;
+}
+
+.vods > h1 {
+  color: purple;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div class="highlights" v-show="show">
-  <h1>Previous Highlights - {{ show }}</h1>
+  <h1>Previous Highlights</h1>
   <div v-for="highlight in h" class="video-wrapper">
     <div class="video">
       <a :href="highlight.url">
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     fetchHighlights(t, num) {
-      this.$http.get('http://streamsiteb/api/streamer/1')
+      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
         .then(function(res) {
           if (res.body.highlights === 'true') {
             this.show = true;
@@ -38,7 +38,7 @@ export default {
     }
   },
   created: function() {
-    this.fetchHighlights('quin69', 3)
+    this.fetchHighlights(this.$twitch, 3)
   }
 }
 </script>
@@ -47,5 +47,10 @@ export default {
 <style scoped>
 .highlights {
   margin-top: 16px;
+  background: #333;
+}
+
+.highlights > h1 {
+  color: purple;
 }
 </style>

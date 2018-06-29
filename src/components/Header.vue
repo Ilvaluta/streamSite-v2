@@ -8,7 +8,9 @@
       <div id="online" v-if="isLive">
         <!-- Add link when backend done -->
         <img :src="img" />
-        <h5>Playing - {{game}} with - {{viewers}} viewers</h5>
+        <hr>
+        <h4>Playing - {{game}}</h4>
+        <h5>{{ viewers }} viewers</h5>
       </div>
       <div id="offline" v-else>
         <h3>Offline !</h3>
@@ -36,7 +38,7 @@ export default {
   },
   methods: {
     onlineCheck(){
-      this.$http.get('https://api.twitch.tv/kraken/streams/studenalbatroz?&client_id=sy8t405is27qepl3jf8j7by99b3wo5k')
+      this.$http.get('https://api.twitch.tv/kraken/streams/'+ this.$twitch +'?&client_id='+this.$clientId)
         .then(function(response){
           if(response.body.stream == null)
             {
@@ -68,13 +70,13 @@ export default {
 .header > h1 {
   text-align: left;
   color: #FFF;
-  margin: 22px 0 0 22px;
+  margin: 32px 0 0 32px;
   display: inline;
 }
 .social {
   text-align: center;
   list-style: none;
-  margin: 16px;
+  margin: 32px;
 }
 
 .social > li {
@@ -90,10 +92,13 @@ export default {
 }
 
 #online {
-  margin: 8px 0 8px 0;
+  margin: 8px;
+  padding-top: 4px;
+  background: rgb(97, 97, 97);
+  border-radius: 8px;
 }
 
-#online > h5 {
+#online > h5, h4 {
   padding: 0;
   margin: 0;
   color: rgb(19, 212, 27);
