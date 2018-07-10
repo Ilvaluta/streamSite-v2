@@ -38,19 +38,12 @@ export default {
     }
   },
   created: function() {
-    this.fetchHighlights(this.$twitch, 3)
+    this.fetchHighlights(this.$twitch, 4)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.highlights {
-  margin-top: 16px;
-  background: #333;
-}
 
-.highlights > h1 {
-  color: purple;
-}
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <Header/>
+    <Giveaway/>
+    <GiveawayModal/>
     <Vods/>
     <Highlights/>
-    <Giveaway/>
-    <Donation/>
     <Sponsors/>
   </div>
 </template>
@@ -16,6 +16,7 @@ import Highlights from './components/Highlights'
 import Giveaway from './components/Giveaway'
 import Donation from './components/Donation'
 import Sponsors from './components/Sponsors'
+import GiveawayModal from './components/modal/Giveaway.vue'
 
 
 export default {
@@ -25,6 +26,7 @@ export default {
     Vods,
     Highlights,
     Giveaway,
+    GiveawayModal,
     Donation,
     Sponsors
   }
@@ -32,13 +34,18 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Archivo|Montserrat');
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: #222;
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#app h1 {
+  font-family: 'Archivo', sans-serif;
 }
 
 /* Temporary fix to get Header to the top of page for now */
@@ -47,6 +54,21 @@ export default {
   margin-left: 0;
   margin-right: 0;
 }
+
+.vods, .highlights {
+  margin: 32px 6% 32px 6%;
+  background: #303030;
+  padding: 8px 0 8px 0;
+}
+
+.vods > h1, .highlights > h1, .giveaway-wrapper > h1, .donations > h1 {
+  color: #ecf0f1;
+  background: #3498db;
+  margin-top: -16px;
+  padding: 8px;
+  font-family: 'Archivo', sans-serif;
+}
+
 .video {
   padding: 0 16px 0 16px;
 }
@@ -62,9 +84,8 @@ export default {
 
 .video-title {
   margin-top: -8px;
-  background: purple;
-  color: white;
-  text-shadow: 1px 1px black;
+  background: #2980b9;
+  color: #ecf0f1;
   max-width: 352px;
 }
 

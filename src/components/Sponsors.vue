@@ -39,6 +39,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.sponsors {
+  padding-top: 16px;
+  background-color: #222;
+}
+
+.sponsors > h1 {
+  color: #ecf0f1;
+}
+
 .wrapper {
   display: inline-block;
 }

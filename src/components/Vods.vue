@@ -4,7 +4,7 @@
     <div v-for="vod in v" class="video-wrapper">
       <div class="video">
         <a :href="vod.url">
-          <img :src="vod.thumbnails[3].url"/>
+          <img :src="vod.thumbnails[1].url"/>
         </a>
         <div class="video-title">
           <h4>{{vod.title}}</h4>
@@ -45,12 +45,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.vods {
-  margin-top: 16px;
-  background: #333;
-}
 
-.vods > h1 {
-  color: purple;
-}
 </style>
