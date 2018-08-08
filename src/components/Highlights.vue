@@ -17,6 +17,7 @@
 <script>
 
 export default {
+  props: ['streamer'],
   name: 'Highlights',
   data() {
     return {
@@ -26,20 +27,13 @@ export default {
   },
   methods: {
     fetchHighlights() {
-      let num;
-      let twitch;
-      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
-        .then(function(res) {
-          if (res.body.highlights === 'true') {
+          if (this.streamer[0].highlights == 'true') {
             this.show = true;
-            num = res.body.vids_number;
-            twitch = res.body.twitch;
-            this.$http.get('https://api.twitch.tv/kraken/channels/' + twitch + '/videos?highlights=true&limit=' + num + '&client_id=' + this.$clientId)
+            this.$http.get('https://api.twitch.tv/kraken/channels/' + this.streamer[0].twitch + '/videos?highlights=true&limit=' + this.streamer[0].num + '&client_id=' + this.$clientId)
               .then(function(response) {
                 this.h = response.body.videos
               });
           }
-        });
     }
   },
   created: function() {

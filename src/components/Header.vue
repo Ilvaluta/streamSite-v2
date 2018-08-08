@@ -15,9 +15,7 @@
     </ul>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
-        <a :href="'http://twitch.tv/' +streamer[0].twitch">
         <img :src="img" />
-      </a>
         <hr>
         <h4>Playing - {{game}}</h4>
         <h5>{{ viewers }} viewers</h5>
@@ -35,7 +33,7 @@ export default {
   name: 'Header',
   data () {
     return {
-      isLive: 'true',
+      isLive: '',
       game: '',
       viewers: '',
       img: '',

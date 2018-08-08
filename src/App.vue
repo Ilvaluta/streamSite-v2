@@ -24,7 +24,7 @@ export default {
   data() {
     return {
     streamer:[
-      {id: '',twitch: '',vids_number: '', vods: '', highlights: '', sponsors: '', donation: '', header: '', headerImg: 'false', giveawayurl: ''}
+      {id: '',twitch: '',num: '', vods: '', highlights: '', sponsors: '', donation: '', header: '', headerImg: 'false', giveawayurl: ''}
     ]
   }
   },
@@ -40,6 +40,7 @@ export default {
         this.streamer[0].header = response.body.header;
         this.streamer[0].twitch = response.body.twitch;
         this.streamer[0].vods = response.body.vods;
+        this.streamer[0].num = response.body.vids_number;
         this.streamer[0].highlights = response.body.highlights;
         this.streamer[0].sponsors = response.body.sponsors;
         this.streamer[0].donation = response.body.donation;

@@ -1,5 +1,5 @@
 <template>
-  <div class="donations" v-show="d">
+  <div class="donations" v-show="show">
     <h1>Donate to me !</h1>
       <div class="donation">
         <a :href="d"><i class="fas fa-5x fa-donate"></i></a>
@@ -9,22 +9,21 @@
 
 <script>
 export default {
+  props: ['streamer'],
   name: 'Donation',
   data () {
     return {
+      show: 'false',
       d: ''
     }
   },
   methods: {
     showDonation(){
-        this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
-          .then(function(res) {
-            if (res.body.donation != null) {
-              this.d = res.body.donation;
+            if (this.streamer[0].donation != '') {
+              this.d = this.streamer[0].donation;
             } else {
               this.d = false;
             }
-          });
     }
   },
   created: function(){

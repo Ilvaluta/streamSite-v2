@@ -1,6 +1,6 @@
 <template>
   <div class="sponsors" v-show="show">
-    <h1>My Sponsors</h1>
+    <h1>Sponsors</h1>
     <div v-for="sponsor in s" class="wrapper">
       <div class="sponsor">
         <a :href="sponsor.url"><img :src="sponsor.img"/></a>
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     fetchSponsors(){
-        if(this.streamer[0].sponsors === 'true'){
+        if(this.streamer[0].sponsors == 'true'){
           this.show = true;
       this.$http.get('http://streamsiteb/api/streamer/'+ this.streamer[0].id +'/sponsors')
         .then(function(response){

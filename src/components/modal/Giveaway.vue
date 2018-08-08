@@ -9,6 +9,7 @@
 const MODAL_WIDTH = 656
 
 export default {
+  props: ['streamer'],
   name: 'GiveawayModal',
   data () {
     return {
@@ -18,14 +19,11 @@ export default {
   },
   methods: {
     getGiveaway(){
-        this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
-          .then(function(res) {
-            if (res.body.donation != null) {
-              this.ga = res.body.giveawayurl;
+            if (this.streamer[0].donation != null) {
+              this.ga = this.streamer[0].giveawayurl;
             } else {
               this.ga = false;
             }
-          });
     }
   },
   created: function() {
