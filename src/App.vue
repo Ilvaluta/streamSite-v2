@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <Header/>
-    <Giveaway/>
-    <GiveawayModal/>
-    <Vods/>
-    <Highlights/>
-    <Sponsors/>
+    <Header v-bind:streamer="streamer"/>
+    <GiveawayModal v-bind:streamer="streamer"/>
+    <Vods v-bind:streamer="streamer"/>
+    <Highlights v-bind:streamer="streamer"/>
+    <Sponsors v-bind:streamer="streamer"/>
+    <Footer v-bind:streamer="streamer"/>
   </div>
 </template>
 
@@ -13,22 +13,51 @@
 import Header from './components/Header'
 import Vods from './components/Vods'
 import Highlights from './components/Highlights'
-import Giveaway from './components/Giveaway'
 import Donation from './components/Donation'
 import Sponsors from './components/Sponsors'
+import Footer from './components/Footer'
 import GiveawayModal from './components/modal/Giveaway.vue'
 
 
 export default {
   name: 'App',
+  data() {
+    return {
+    streamer:[
+      {id: '',twitch: '',vids_number: '', vods: '', highlights: '', sponsors: '', donation: '', header: '', headerImg: 'false', giveawayurl: ''}
+    ]
+  }
+  },
+  methods: {
+    fetchStreamer(){
+      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId).then(function(response){
+          if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(response.body.header)) {
+            this.streamer[0].headerImg = true;
+          } else { // input is not an image
+            this.streamer[0].headerImg = false;
+          }
+        this.streamer[0].id = response.body.id;
+        this.streamer[0].header = response.body.header;
+        this.streamer[0].twitch = response.body.twitch;
+        this.streamer[0].vods = response.body.vods;
+        this.streamer[0].highlights = response.body.highlights;
+        this.streamer[0].sponsors = response.body.sponsors;
+        this.streamer[0].donation = response.body.donation;
+        this.streamer[0].giveawayurl = response.body.giveawayurl;
+        });
+    }
+    },
+    created: function(){
+      this.fetchStreamer();
+    },
   components: {
     Header,
     Vods,
     Highlights,
-    Giveaway,
     GiveawayModal,
     Donation,
-    Sponsors
+    Sponsors,
+    Footer
   }
 }
 </script>

@@ -1,17 +1,23 @@
 <template>
   <div class="header">
-    <img :src="header" v-if="headerImg">
-    <h1 v-else>{{header}}</h1>
+    <img :src="streamer[0].header" v-if="streamer[0].headerImg">
+    <h1 v-else>{{streamer[0].header}}</h1>
+    <div class="giveaway" v-show="ga">
+      <a @click="$modal.show('ga-modal')"><i class="fas fa-4x fa-gift"></i></a>
+      <h5>Giveaway</h5>
+    </div>
     <div class="donation">
       <a :href="d"><i class="fas fa-4x fa-donate"></i></a>
+      <h5>Donate</h5>
     </div>
     <ul class="social">
       <li v-for="sl in social"><a :href="sl.url"><i :class="sl.icon"></i></a></li>
     </ul>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
-        <!-- Add link when backend done -->
+        <a :href="'http://twitch.tv/' +streamer[0].twitch">
         <img :src="img" />
+      </a>
         <hr>
         <h4>Playing - {{game}}</h4>
         <h5>{{ viewers }} viewers</h5>
@@ -25,22 +31,22 @@
 
 <script>
 export default {
+  props: ['streamer'],
   name: 'Header',
   data () {
     return {
-      isLive: false,
-      headerImg: false,
-      header: '',
+      isLive: 'true',
       game: '',
       viewers: '',
       img: '',
       d: '',
+      ga: 'ss',
       social: []
     }
   },
   methods: {
     onlineCheck(){
-      this.$http.get('https://api.twitch.tv/kraken/streams/'+ this.$twitch +'?&client_id='+this.$clientId)
+      this.$http.get('https://api.twitch.tv/kraken/streams/'+ this.streamer[0].twitch +'?&client_id='+this.$clientId)
         .then(function(response){
           if(response.body.stream == null)
             {
@@ -55,28 +61,15 @@ export default {
         });
     },
     showDonation(){
-        this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
-          .then(function(res) {
-            if (res.body.donation != null) {
-              this.d = res.body.donation;
+            if (this.streamer[0].donation != '') {
+              this.d = this.streamer[0].donation;
             } else {
               this.d = false;
             }
-          });
     },
     fetchSocial(){
       this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId+'/social').then(function(response){
         this.social = response.body;
-        });
-    },
-    fetchHeader(){
-      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId).then(function(response){
-          if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(response.body.header)) {
-            this.headerImg = true;
-          } else { // input is not an image
-            this.headerImg = false;
-          }
-        this.header = response.body.header;
         });
     }
   },
@@ -84,7 +77,6 @@ export default {
     this.onlineCheck();
     this.fetchSocial();
     this.showDonation();
-    this.fetchHeader();
   }
 }
 </script>
@@ -98,7 +90,7 @@ hr {
 }
 .header {
   display: grid;
-  grid-template-columns: 2fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
   width: 100%;
   background: #3498db;
 }
@@ -136,15 +128,20 @@ hr {
   color: #222;
 }
 
-.donation {
+.donation, .giveaway {
   margin: 32px;
 }
 
-.donation > a {
+.donation > h5, .giveaway > h5 {
+  margin: 4px 0 0 0;
+  color: #ecf0f1;
+}
+
+.donation > a, .giveaway > a{
  color: #ecf0f1;
 }
 
-.donation > a:hover {
+.donation > a:hover, .giveaway > a:hover {
   transition: all 0.2s ease-in-out;
   color: #222;
 }

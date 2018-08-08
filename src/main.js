@@ -5,13 +5,14 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VModal from 'vue-js-modal'
 
+export const eventBus = new Vue();
+
 Vue.use(VModal)
 
 Vue.use(VueResource);
 
 Vue.prototype.$clientId = 'sy8t405is27qepl3jf8j7by99b3wo5k'
-Vue.prototype.$streamerId = '1'
-Vue.prototype.$twitch = 'purespam'
+Vue.prototype.$streamerId = '2'
 Vue.prototype.$ga = 'https://gleam.io/6FH24/your-giveaway'
 
 /* eslint-disable no-new */

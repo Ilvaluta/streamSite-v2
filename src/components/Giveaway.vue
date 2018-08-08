@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="giveaway-wrapper" v-show="ga">
     <h1>Giveaway</h1>
       <div class="giveaway">
@@ -40,4 +40,4 @@ export default {
   font-weight: bold;
 }
 
-</style>
+</style> -->

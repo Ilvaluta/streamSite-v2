@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Highlights',
   data() {
@@ -24,12 +25,16 @@ export default {
     }
   },
   methods: {
-    fetchHighlights(t, num) {
+    fetchHighlights() {
+      let num;
+      let twitch;
       this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
         .then(function(res) {
           if (res.body.highlights === 'true') {
             this.show = true;
-            this.$http.get('https://api.twitch.tv/kraken/channels/' + t + '/videos?highlights=true&limit=' + num + '&client_id=' + this.$clientId)
+            num = res.body.vids_number;
+            twitch = res.body.twitch;
+            this.$http.get('https://api.twitch.tv/kraken/channels/' + twitch + '/videos?highlights=true&limit=' + num + '&client_id=' + this.$clientId)
               .then(function(response) {
                 this.h = response.body.videos
               });
@@ -38,7 +43,7 @@ export default {
     }
   },
   created: function() {
-    this.fetchHighlights(this.$twitch, 4)
+    this.fetchHighlights()
   }
 }
 </script>

@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  props: ['streamer'],
   name: 'Sponsors',
   data () {
     return {
@@ -20,15 +21,13 @@ export default {
   },
   methods: {
     fetchSponsors(){
-      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId).then(function(response){
-        if(response.body.sponsors === 'true'){
+        if(this.streamer[0].sponsors === 'true'){
           this.show = true;
-      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId+'/sponsors')
+      this.$http.get('http://streamsiteb/api/streamer/'+ this.streamer[0].id +'/sponsors')
         .then(function(response){
         this.s = response.body;
         });
       }
-    });
     }
   },
   created: function(){

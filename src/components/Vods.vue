@@ -24,12 +24,16 @@ export default {
     }
   },
   methods: {
-    fetchVods(t, num){
+    fetchVods(){
+      let num;
+      let twitch;
       this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId)
       .then(function(res) {
       if(res.body.vods === 'true') {
         this.show = true;
-      this.$http.get('https://api.twitch.tv/kraken/channels/'+ t +'/videos?broadcasts=true&limit='+num+'&client_id='+this.$clientId)
+        num = res.body.vids_number;
+        twitch = res.body.twitch
+      this.$http.get('https://api.twitch.tv/kraken/channels/'+ twitch +'/videos?broadcasts=true&limit='+num+'&client_id='+this.$clientId)
         .then(function(response){
         this.v = response.body.videos
         });
@@ -38,7 +42,7 @@ export default {
     }
   },
   created: function(){
-    this.fetchVods(this.$twitch, 4)
+    this.fetchVods()
   }
 }
 </script>
