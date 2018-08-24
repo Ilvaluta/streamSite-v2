@@ -1,17 +1,17 @@
 <template>
   <div class="header">
-    <img :src="streamer[0].header" v-if="streamer[0].headerImg">
-    <h1 v-else>{{streamer[0].header}}</h1>
+    <!-- <img :src="header" v-if="headerImg"> -->
+    <h1>{{header}}</h1>
     <div class="giveaway" v-show="ga">
       <a @click="$modal.show('ga-modal')"><i class="fas fa-4x fa-gift"></i></a>
       <h5>Giveaway</h5>
     </div>
     <div class="donation">
-      <a :href="d"><i class="fas fa-4x fa-donate"></i></a>
+      <a :href="d" target="_blank"><i class="fas fa-4x fa-donate"></i></a>
       <h5>Donate</h5>
     </div>
     <ul class="social">
-      <li v-for="sl in social"><a :href="sl.url"><i :class="sl.icon"></i></a></li>
+      <li v-for="sl in social"><a :href="sl.url" target="_blank"><i :class="sl.icon"></i></a></li>
     </ul>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import db from './firebaseInit'
 export default {
   props: ['streamer'],
   name: 'Header',
@@ -37,44 +38,55 @@ export default {
       game: '',
       viewers: '',
       img: '',
+      twitch: '',
+      header: '',
       d: '',
       ga: 'ss',
       social: []
     }
   },
   methods: {
-    onlineCheck(){
-      this.$http.get('https://api.twitch.tv/kraken/streams/'+ this.streamer[0].twitch +'?&client_id='+this.$clientId)
-        .then(function(response){
-          if(response.body.stream == null)
-            {
-              this.isLive = false
-            }
-          else {
-            this.isLive = true
-            this.game = response.body.stream.game
-            this.viewers = response.body.stream.viewers
-            this.img = response.body.stream.preview.small
-          }
-        });
-    },
-    showDonation(){
-            if (this.streamer[0].donation != '') {
-              this.d = this.streamer[0].donation;
-            } else {
-              this.d = false;
-            }
+    fetchInfo(){
+      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.twitch = doc.data().twitch;
+          this.header = doc.data().header;
+          this.ss = doc.data().giveawayurl;
+          this.d = doc.data().donation
+          this.$http.get('https://api.twitch.tv/kraken/streams/'+doc.data().twitch+'?&client_id='+this.$clientId)
+            .then(function(response){
+              if(response.body.stream == null)
+                {
+                  this.isLive = false
+                }
+              else {
+                this.isLive = true
+                this.game = response.body.stream.game
+                this.viewers = response.body.stream.viewers
+                this.img = response.body.stream.preview.small
+              }
+            });
+        })
+      })
     },
     fetchSocial(){
-      this.$http.get('http://streamsiteb/api/streamer/'+this.$streamerId+'/social').then(function(response){
-        this.social = response.body;
-        });
-    }
+      db.collection('social').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          const social = {
+            icon : doc.data().icon,
+            url : doc.data().url
+          }
+          this.social.push(social)
+        })
+      })
+    },
   },
   created: function(){
-    this.onlineCheck();
-    this.fetchSocial();
-    this.showDonation();
+    this.fetchInfo()
+    this.fetchSocial()
+  },
+  updated: function(){
+    this.fetchInfo()
   }
 }
 </script>

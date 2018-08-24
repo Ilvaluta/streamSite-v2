@@ -10,8 +10,9 @@
 </template>
 
 <script>
+import db from './firebaseInit'
+
 export default {
-  props: ['streamer'],
   name: 'Sponsors',
   data () {
     return {
@@ -20,17 +21,29 @@ export default {
     }
   },
   methods: {
-    fetchSponsors(){
-        if(this.streamer[0].sponsors == 'true'){
-          this.show = true;
-      this.$http.get('http://streamsiteb/api/streamer/'+ this.streamer[0].id +'/sponsors')
-        .then(function(response){
-        this.s = response.body;
-        });
-      }
-    }
+    fetchInfo() {
+      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.show = doc.data().sponsors
+        })
+      })
+    },
+    fetchSponsors() {
+      db.collection('sponsors').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          const sponsor = {
+            'id': doc.id,
+            'name': doc.data().name,
+            'url': doc.data().url,
+            'img': doc.data().img
+          }
+          this.s.push(sponsor)
+        })
+      })
+    },
   },
   created: function(){
+    this.fetchInfo()
     this.fetchSponsors()
   }
 }

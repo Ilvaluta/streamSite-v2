@@ -1,11 +1,12 @@
 <template>
 <modal name="ga-modal" transition="pop-out" :width="modalWidth" :height="600">
   <div class="ga-box">
-      <iframe src="https://gleam.io/6FH24/your-giveaway" class="ga-frame" frameborder="0" scrolling="no"></iframe>
+      <iframe :src="ga" class="ga-frame" frameborder="0" scrolling="no"></iframe>
   </div>
 </modal>
 </template>
 <script>
+import db from '../firebaseInit'
 const MODAL_WIDTH = 656
 
 export default {
@@ -18,16 +19,16 @@ export default {
     }
   },
   methods: {
-    getGiveaway(){
-            if (this.streamer[0].donation != null) {
-              this.ga = this.streamer[0].giveawayurl;
-            } else {
-              this.ga = false;
-            }
+    fetchGiveaway() {
+      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.ga = doc.data().giveawayurl
+        })
+      })
     }
   },
   created: function() {
-    this.getGiveaway();
+    this.fetchGiveaway()
     this.modalWidth = window.innerWidth < MODAL_WIDTH
       ? MODAL_WIDTH / 2
       : MODAL_WIDTH

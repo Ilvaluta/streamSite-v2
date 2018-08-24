@@ -2,7 +2,7 @@
   <div class="donations" v-show="show">
     <h1>Donate to me !</h1>
       <div class="donation">
-        <a :href="d"><i class="fas fa-5x fa-donate"></i></a>
+        <a :href="d" target="_blank"><i class="fas fa-5x fa-donate"></i></a>
       </div>
   </div>
 </template>
@@ -18,15 +18,23 @@ export default {
     }
   },
   methods: {
+    fetchDonation() {
+      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.d = doc.data().donation
+        })
+      })
+    },
     showDonation(){
-            if (this.streamer[0].donation != '') {
-              this.d = this.streamer[0].donation;
+            if (this.streamer.donation != '') {
+              this.d = this.streamer.donation;
             } else {
               this.d = false;
             }
     }
   },
   created: function(){
+    this.fetchDonation()
     this.showDonation()
   }
 }

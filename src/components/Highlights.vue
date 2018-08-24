@@ -15,28 +15,43 @@
 </template>
 
 <script>
-
+import db from './firebaseInit'
 export default {
   props: ['streamer'],
   name: 'Highlights',
   data() {
     return {
       show: '',
-      h: []
+      h: [],
+      num: '',
+      twitch: ''
     }
   },
   methods: {
+    fetchInfo() {
+      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.twitch = doc.data().twitch;
+          this.show = doc.data().highlights;
+          this.num = doc.data().vids_num;
+        })
+      })
+    },
     fetchHighlights() {
-          if (this.streamer[0].highlights == 'true') {
-            this.show = true;
-            this.$http.get('https://api.twitch.tv/kraken/channels/' + this.streamer[0].twitch + '/videos?highlights=true&limit=' + this.streamer[0].num + '&client_id=' + this.$clientId)
-              .then(function(response) {
-                this.h = response.body.videos
-              });
-          }
+      if (this.show == 'true') {
+        this.$http.get('https://api.twitch.tv/kraken/channels/' + this.twitch + '/videos?highlights=true&limit=' + this.num + '&client_id=' + this.$clientId)
+          .then(function(response) {
+            this.h = response.body.videos
+          });
+      }
     }
   },
   created: function() {
+    this.fetchInfo()
+    this.fetchHighlights()
+  },
+  updated: function() {
+    this.fetchInfo()
     this.fetchHighlights()
   }
 }
