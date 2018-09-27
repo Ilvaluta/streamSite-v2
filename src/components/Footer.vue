@@ -17,12 +17,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .footer {
-  margin: 16px 0 0 0;
+  margin: 0;
   background: #303030;
 }
 .footer > p {
   text-align: right;
-  padding: 0 16px 4px 0;
+  padding: 2px 16px 4px 0;
   margin: 0;
   color: #ecf0f1;
 }

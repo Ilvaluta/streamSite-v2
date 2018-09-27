@@ -1,21 +1,20 @@
 <template>
-  <div class="header">
+  <div class="header" v-bind:style="{background: colors.headerBg}">
     <!-- <img :src="header" v-if="headerImg"> -->
-    <h1>{{header}}</h1>
+    <h1 v-bind:style="{color: colors.headerText}">{{header}}</h1>
     <div class="giveaway" v-show="ga">
-      <a @click="$modal.show('ga-modal')"><i class="fas fa-4x fa-gift"></i></a>
-      <h5>Giveaway</h5>
+      <a @click="$modal.show('ga-modal')" v-bind:style="{color: colors.socialIcon}"><i class="fas fa-4x fa-gift"></i></a>
+      <h5 v-bind:style="{color: colors.socialText}">Giveaway</h5>
     </div>
     <div class="donation">
-      <a :href="d" target="_blank"><i class="fas fa-4x fa-donate"></i></a>
-      <h5>Donate</h5>
+      <a :href="d" target="_blank" v-bind:style="{color: colors.socialIcon}"><i class="fas fa-4x fa-donate"></i></a>
+      <h5 v-bind:style="{color: colors.socialText}">Donate</h5>
     </div>
-    <ul class="social">
-      <li v-for="sl in social"><a :href="sl.url" target="_blank"><i :class="sl.icon"></i></a></li>
-    </ul>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
-        <img :src="img" />
+        <a :href="'http://twitch.tv/' + twitch" target="_blank">
+          <img :src="img" />
+        </a>
         <hr>
         <h4>Playing - {{game}}</h4>
         <h5>{{ viewers }} viewers</h5>
@@ -30,7 +29,7 @@
 <script>
 import db from './firebaseInit'
 export default {
-  props: ['streamer'],
+  props: ['colors'],
   name: 'Header',
   data () {
     return {
@@ -42,7 +41,6 @@ export default {
       header: '',
       d: '',
       ga: 'ss',
-      social: []
     }
   },
   methods: {
@@ -63,27 +61,27 @@ export default {
                 this.isLive = true
                 this.game = response.body.stream.game
                 this.viewers = response.body.stream.viewers
-                this.img = response.body.stream.preview.small
+                this.img = response.body.stream.preview.medium
               }
             });
         })
       })
     },
-    fetchSocial(){
-      db.collection('social').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          const social = {
-            icon : doc.data().icon,
-            url : doc.data().url
-          }
-          this.social.push(social)
-        })
-      })
-    },
+    // fetchSocial(){
+    //   db.collection('social').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+    //     querySnapshot.forEach((doc) => {
+    //       const social = {
+    //         icon : doc.data().icon,
+    //         url : doc.data().url
+    //       }
+    //       this.social.push(social)
+    //     })
+    //   })
+    // },
   },
   created: function(){
     this.fetchInfo()
-    this.fetchSocial()
+    // this.fetchSocial()
   },
   updated: function(){
     this.fetchInfo()
@@ -98,18 +96,19 @@ hr {
   height: 2px;
   border: 0;
 }
+
 .header {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
+  grid-gap: 40px;
+  grid-template-areas: "text giveaway donation status";
   width: 100%;
-  background: #3498db;
 }
 .header > h1 {
+  grid-area: text;
   text-align: left;
   color: #ecf0f1;
   margin: 56px 0 0 40px;
   display: inline;
-  font-family: 'Archivo', sans-serif;
 }
 
 .header > img {
@@ -117,7 +116,7 @@ hr {
   display: inline;
 }
 
-.social {
+/* .social {
   text-align: center;
   list-style: none;
   margin: 32px;
@@ -136,6 +135,14 @@ hr {
 .social > li > a:hover {
   transition: all 0.2s ease-in-out;
   color: #222;
+} */
+
+.donation {
+  grid-area: donation;
+}
+
+.giveaway {
+  grid-area: giveaway;
 }
 
 .donation, .giveaway {
@@ -156,43 +163,67 @@ hr {
   color: #222;
 }
 
+.status {
+  grid-area: status;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#online > a {
+  text-decoration: none;
+}
+
 #online {
+  max-height: 200px;
+  max-width: 300px;
   margin: 8px;
   padding: 4px 0 4px 0;
-  background: #D2D7D3;
-  border-radius: 8px;
-  animation-name: pulse;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
+  background: #EAEAEA;
+  border-radius: 4px;
 }
 
 #online > h5, h4 {
   padding: 0;
   margin: 0;
-  color: #4D8FAC;
+  color: #333;
+  text-decoration: none;
 }
 
-#online > img {
-  width: 50%;
+#online >a > img {
+  width: 60%;
 }
 
 #offline {
+  align-self: center;
   color: #C91F37;
-  margin: 30px 80px 0 80px;
+  padding: 16px;
+  margin-right: 80px;
   font-weight: bold;
   background: #D2D7D3;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0px 0px 0px 0px #8e44ad;
+
+@media only screen and (max-width:800px) {
+  .header {
+    grid-template-areas: "text donation giveaway" "status status status";
+    grid-gap: 0;
   }
-  50% {
-    box-shadow: 0px 0px 12px 0px #8e44ad;
+  .header > h1 {
+    margin-bottom: 0.5em;
   }
-  100 {
-    box-shadow: 0px 0px 36px 8px #8e44ad;
+  .status {
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width:480px) {
+  .header {
+    grid-template-areas: "text text" "status status" "giveaway donation";
+    grid-gap: 0;
+  }
+  .header > h1 {
+    margin-bottom: 0.5em;
   }
 }
 

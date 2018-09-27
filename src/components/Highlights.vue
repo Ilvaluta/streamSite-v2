@@ -1,13 +1,15 @@
 <template>
 <div class="highlights" v-show="show">
-  <h1>Previous Highlights</h1>
+  <div class="section-header" v-bind:style="{background: colors.titleBg}">
+  <h1 v-bind:style="{color: colors.titleText}">Previous Highlights</h1>
+</div>
   <div v-for="highlight in h" class="video-wrapper">
     <div class="video">
       <a :href="highlight.url">
           <img :src="highlight.thumbnails[0].url"/>
         </a>
-      <div class="video-title">
-        <h4>{{highlight.title}}</h4>
+      <div class="video-title" v-bind:style="{background: colors.titleBg}">
+        <h4 v-bind:style="{color: colors.titleText}">{{highlight.title}}</h4>
       </div>
     </div>
   </div>
@@ -17,7 +19,7 @@
 <script>
 import db from './firebaseInit'
 export default {
-  props: ['streamer'],
+  props: ['colors'],
   name: 'Highlights',
   data() {
     return {
@@ -39,7 +41,7 @@ export default {
     },
     fetchHighlights() {
       if (this.show == 'true') {
-        this.$http.get('https://api.twitch.tv/kraken/channels/' + this.twitch + '/videos?highlights=true&limit=' + this.num + '&client_id=' + this.$clientId)
+        this.$http.get('https://api.twitch.tv/kraken/channels/' + this.twitch + '/videos?clips=true&limit=' + this.num + '&client_id=' + this.$clientId)
           .then(function(response) {
             this.h = response.body.videos
           });

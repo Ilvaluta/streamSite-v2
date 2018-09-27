@@ -1,7 +1,7 @@
 <template>
 <modal name="ga-modal" transition="pop-out" :width="modalWidth" :height="600">
   <div class="ga-box">
-      <iframe :src="ga" class="ga-frame" frameborder="0" scrolling="no"></iframe>
+      <iframe :src="ga" class="ga-frame" frameborder="0" scrolling="yes"></iframe>
   </div>
 </modal>
 </template>

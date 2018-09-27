@@ -1,13 +1,15 @@
 <template>
   <div class="vods" v-show="show">
-    <h1>Previous Broadcasts</h1>
+    <div class="section-header" v-bind:style="{background: colors.titleBg}">
+    <h1 v-bind:style="{color: colors.titleText}">Previous Broadcasts</h1>
+  </div>
     <div v-for="vod in v" class="video-wrapper">
       <div class="video">
         <a :href="vod.url">
           <img :src="vod.preview"/>
         </a>
-        <div class="video-title">
-          <h4>{{vod.title}}</h4>
+        <div class="video-title" v-bind:style="{background: colors.titleBg}">
+          <h4 v-bind:style="{color: colors.titleText}">{{vod.title}}</h4>
         </div>
       </div>
     </div>
@@ -17,13 +19,15 @@
 <script>
 import db from './firebaseInit'
 export default {
-  props: ['streamer'],
+  props: ['colors'],
   name: 'Vods',
   data () {
     return {
       show: false,
       num: '',
-      twitch: 'ziqoftw',
+      titleBg: '',
+      titleText: '',
+      twitch: '',
       v: []
     }
   },
@@ -31,7 +35,7 @@ export default {
     fetchInfo(){
       db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
-          // this.twitch = doc.data().twitch;
+          this.twitch = doc.data().twitch;
           this.show = doc.data().vods;
           this.num = doc.data().vids_num;
         })

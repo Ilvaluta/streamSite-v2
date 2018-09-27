@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="donations" v-show="show">
     <h1>Donate to me !</h1>
       <div class="donation">
@@ -51,4 +51,4 @@ export default {
 .donation {
   padding: 8px 16px 8px 16px;
 }
-</style>
+</style> -->

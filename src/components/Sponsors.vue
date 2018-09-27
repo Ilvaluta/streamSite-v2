@@ -1,9 +1,17 @@
 <template>
   <div class="sponsors" v-show="show">
-    <h1>Sponsors</h1>
+    <!-- <div class="section-header" v-bind:style="{background: colors.titleBg}">
+    <h1 v-bind:style="{color: colors.titleText}">Sponsors</h1>
+  </div> -->
     <div v-for="sponsor in s" class="wrapper">
       <div class="sponsor">
-        <a :href="sponsor.url"><img :src="sponsor.img"/></a>
+        <div class="sponsorHeader" v-bind:style="{background: colors.titleBg}">
+          <h1 v-bind:style="{color: colors.titleText}">G2A</h1>
+        </div>
+        <div class="sponsorImage">
+          <a :href="sponsor.url"><img :src="sponsor.img"/></a>
+        </div>
+          <h4 v-bind:style="{color: colors.titleText}">{{sponsor.text}}</h4>
       </div>
     </div>
   </div>
@@ -14,6 +22,7 @@ import db from './firebaseInit'
 
 export default {
   name: 'Sponsors',
+  props: ['colors'],
   data () {
     return {
       show: '',
@@ -35,7 +44,8 @@ export default {
             'id': doc.id,
             'name': doc.data().name,
             'url': doc.data().url,
-            'img': doc.data().img
+            'img': doc.data().img,
+            'text': doc.data().text
           }
           this.s.push(sponsor)
         })
@@ -51,19 +61,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sponsors {
-  padding-top: 16px;
-  background-color: #222;
-}
-
-.sponsors > h1 {
-  color: #ecf0f1;
-}
 
 .wrapper {
   display: inline-block;
+  padding: 0;
+  margin: 0;
 }
-.sponsor {
-  padding: 0 16px 0 16px;
-}
+
 </style>
