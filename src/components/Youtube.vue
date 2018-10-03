@@ -51,7 +51,6 @@ export default {
   created: function() {
     this.fetchInfo()
     this.fetchYoutube()
-    console.log(this.ytVids)
   },
   updated: function() {
     this.fetchInfo()

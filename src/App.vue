@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 #app {
   background-color: #333;
@@ -88,11 +88,11 @@ export default {
   color: #2c3e50;
   margin: 0;
   padding: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #app h1 {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* Temporary fix to get Header to the top of page for now */
@@ -105,7 +105,7 @@ export default {
 .highlights, .youtube
 {
   margin: 32px 6% 32px 6%;
-  background: rgba(48, 48, 48, 0.95);
+  background: rgb(48, 48, 48);
   border-radius: 4px;
 }
 
@@ -115,7 +115,7 @@ export default {
 }
 
 .instagram {
-  background: rgba(48, 48, 48, 0.95);
+  background: rgb(48, 48, 48);
   border-radius: 4px;
 }
 
@@ -155,22 +155,36 @@ export default {
   grid-gap: 4em;
 }
 
-.twitter {
-  grid-area: twitter;
-}
-
 .instagram {
   grid-area: instagram;
 }
 
+.twitter {
+  grid-area: twitter;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.twitter > .section-header {
+  margin-right: 16px;
+  margin-bottom: -2px;
+  z-index: 9;
+  position: relative;
+}
+
 .twitter-timeline-settings {
-  margin: 0;
-  padding: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  z-index: 8;
+  position: relative;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
   max-height: 480px;
-  overflow-y: scroll;
   overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 24px; /* Increase/decrease this value for cross-browser compatibility */
+  box-sizing: content-box; /* So the width will be 100% + 17px */
 }
 
 .sponsors {

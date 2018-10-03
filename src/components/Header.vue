@@ -1,7 +1,7 @@
 <template>
   <div class="header" v-bind:style="{background: colors.headerBg}">
-    <!-- <img :src="header" v-if="headerImg"> -->
-    <h1 v-bind:style="{color: colors.headerText}">{{header}}</h1>
+    <img :src="header" v-if="headerImg">
+    <h1 v-else v-bind:style="{color: colors.headerText}">{{header}}</h1>
     <div class="giveaway" v-show="ga">
       <a @click="$modal.show('ga-modal')" v-bind:style="{color: colors.socialIcon}"><i class="fas fa-4x fa-gift"></i></a>
       <h5 v-bind:style="{color: colors.socialText}">Giveaway</h5>
@@ -39,17 +39,17 @@ export default {
       img: '',
       twitch: '',
       header: '',
+      headerImg: false,
       d: '',
-      ga: 'ss',
+      ga: true,
     }
   },
   methods: {
     fetchInfo(){
       db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
-          this.twitch = doc.data().twitch;
-          this.header = doc.data().header;
-          this.ss = doc.data().giveawayurl;
+          this.twitch = doc.data().twitch
+          this.header = doc.data().header
           this.d = doc.data().donation
           this.$http.get('https://api.twitch.tv/kraken/streams/'+doc.data().twitch+'?&client_id='+this.$clientId)
             .then(function(response){
@@ -63,9 +63,28 @@ export default {
                 this.viewers = response.body.stream.viewers
                 this.img = response.body.stream.preview.medium
               }
-            });
+            })
+            this.$nextTick(() => {
+              if(this.isImage(doc.data().header)){
+                this.headerImg = true
+              } else {
+                this.headerImg = false
+              }
+              if(doc.data().giveawayurl == null || doc.data().giveawayurl == 'false') {
+                this.ga = false
+              } else {
+                this.ga = true
+              }
+            })
         })
       })
+    },
+    isImage(input) {
+        if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(input)) {
+            return true
+        } else { // input is not an image
+            return false
+        }
     },
     // fetchSocial(){
     //   db.collection('social').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
@@ -81,7 +100,6 @@ export default {
   },
   created: function(){
     this.fetchInfo()
-    // this.fetchSocial()
   },
   updated: function(){
     this.fetchInfo()
@@ -206,15 +224,20 @@ hr {
 
 @media only screen and (max-width:800px) {
   .header {
-    grid-template-areas: "text donation giveaway" "status status status";
+    grid-template-areas: "text text text" "status donation giveaway";
     grid-gap: 0;
   }
   .header > h1 {
     margin-bottom: 0.5em;
+    text-align: center;
   }
   .status {
     justify-content: center;
   }
+  #offline{
+    margin: 0 1em 0 1em;
+  }
+
 }
 
 @media only screen and (max-width:480px) {
@@ -223,7 +246,10 @@ hr {
     grid-gap: 0;
   }
   .header > h1 {
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
+  }
+  #offline {
+    margin-right: -0.5em;
   }
 }
 
