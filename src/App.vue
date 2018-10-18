@@ -1,78 +1,30 @@
 <template>
-<div id="app" v-bind:style="{background: bg}">
-  <Header v-bind:colors="colors"/>
-  <GiveawayModal />
-  <div class="social-embeds">
-    <Instagram v-bind:colors="colors" />
-    <Twitter v-bind:colors="colors" />
-  </div>
-  <Vods v-bind:colors="colors" />
-  <Highlights v-bind:colors="colors" />
-  <Youtube v-bind:colors="colors" />
-  <Sponsors v-bind:colors="colors" />
-  <Footer />
+<div id="app">
+  <router-view />
 </div>
 </template>
 
 <script>
 import db from './components/firebaseInit'
 
-import Header from './components/Header'
-import Vods from './components/Vods'
-import Highlights from './components/Highlights'
-import Youtube from './components/Youtube'
-import Donation from './components/Donation'
-import Sponsors from './components/Sponsors'
-import Footer from './components/Footer'
-import Instagram from './components/Instagram'
-import Twitter from './components/Twitter'
-import GiveawayModal from './components/modal/Giveaway.vue'
-
-
-
 export default {
   name: 'App',
   data() {
     return {
-      colors: {
-        titleBg: '',
-        titleText: '',
-        headerBg: '',
-        headerText: '',
-        socialIcon: '',
-        socialText: '',
-      },
-      bg: ''
+      // bg: ''
     }
   },
   methods: {
-    fetchStyles(){
-      db.collection('colors').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          this.colors.titleBg = doc.data().titleBg
-          this.colors.titleText = doc.data().titleText
-          this.colors.headerBg = doc.data().headerBg
-          this.colors.headerText = doc.data().headerText
-          this.colors.socialIcon = doc.data().socialIcon
-          this.colors.socialText = doc.data().socialText
-          this.bg = 'url('+doc.data().bg+')'
-        })
-      })
-    },
+    // fetchBg(){
+    //   db.collection('colors').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+    //     querySnapshot.forEach((doc) => {
+    //       this.bg = 'url('+doc.data().bg+')'
+    //     })
+    //   })
+    // },
   },
   created: function(){
-    this.fetchStyles()
-  },
-  components: {
-    Header,
-    Vods,
-    Highlights,
-    Youtube,
-    GiveawayModal,
-    Instagram,
-    Twitter,
-    Sponsors,
-    Footer
+    // this.fetchBg()
   }
 }
 </script>
@@ -81,8 +33,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 #app {
-  background-color: #333;
-  background-size: cover !important;
   width: 100%;
   text-align: center;
   color: #2c3e50;
@@ -225,6 +175,10 @@ export default {
   .video-title{
     margin-top: -6px;
   }
+  .twitter > .section-header {
+    margin-right: 0;
+  }
+
 }
 
 @media only screen and (max-width:740px) {

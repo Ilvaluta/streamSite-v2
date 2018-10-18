@@ -1,7 +1,7 @@
 <template>
     <div class="instagram" v-if="show">
-      <div class="section-header" v-bind:style="{background: colors.titleBg}">
-        <h1 v-bind:style="{color: colors.titleText}">Instagram</h1>
+      <div class="section-header" v-bind:style="{background: config.titleBg}">
+        <h1 v-bind:style="{color: config.titleText}">Instagram</h1>
       </div>
       <vue-instagram :token="t" :count="5" mediaType="image">
   <template slot="feeds" slot-scope="props">
@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import db from './firebaseInit'
+import db from '../firebaseInit'
 
 export default {
-  props: ['colors', 'social'],
+  props: ['config', 'social'],
   name: 'Instagram',
   data() {
     return {
@@ -32,14 +32,16 @@ export default {
   },
   methods: {
     fetchToken() {
-      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          this.t = doc.data().instagram
-          this.$nextTick(() => {
-            this.show = true
+        if(this.config.registered == 'true'){
+        db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
+          querySnapshot.forEach((doc) => {
+            this.t = doc.data().instagram
+            this.$nextTick(() => {
+              this.show = true
+            })
           })
         })
-      })
+      }
     }
   },
   created: function(){

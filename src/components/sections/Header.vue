@@ -1,14 +1,16 @@
 <template>
-  <div class="header" v-bind:style="{background: colors.headerBg}">
-    <img :src="header" v-if="headerImg">
-    <h1 v-else v-bind:style="{color: colors.headerText}">{{header}}</h1>
+  <div class="header" v-bind:style="{background: config.headerBg}">
+    <div class="logo">
+    <img :src="config.header" v-if="headerImg">
+    <h1 v-else v-bind:style="{color: config.headerText}">{{config.header}}</h1>
+  </div>
     <div class="giveaway" v-show="ga">
-      <a @click="$modal.show('ga-modal')" v-bind:style="{color: colors.socialIcon}"><i class="fas fa-4x fa-gift"></i></a>
-      <h5 v-bind:style="{color: colors.socialText}">Giveaway</h5>
+      <a @click="$modal.show('ga-modal')" v-bind:style="{color: config.socialIcon}"><i class="fas fa-4x fa-gift"></i></a>
+      <h5 v-bind:style="{color: config.socialText}">Giveaway</h5>
     </div>
     <div class="donation">
-      <a :href="d" target="_blank" v-bind:style="{color: colors.socialIcon}"><i class="fas fa-4x fa-donate"></i></a>
-      <h5 v-bind:style="{color: colors.socialText}">Donate</h5>
+      <a :href="d" target="_blank" v-bind:style="{color: config.socialIcon}"><i class="fas fa-4x fa-donate"></i></a>
+      <h5 v-bind:style="{color: config.socialText}">Donate</h5>
     </div>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
@@ -27,9 +29,9 @@
 </template>
 
 <script>
-import db from './firebaseInit'
+import db from '../firebaseInit'
 export default {
-  props: ['colors'],
+  props: ['config'],
   name: 'Header',
   data () {
     return {
@@ -37,8 +39,6 @@ export default {
       game: '',
       viewers: '',
       img: '',
-      twitch: '',
-      header: '',
       headerImg: false,
       d: '',
       ga: true,
@@ -46,12 +46,10 @@ export default {
   },
   methods: {
     fetchInfo(){
-      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+      if(this.config.registered == 'true'){
+      db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
-          this.twitch = doc.data().twitch
-          this.header = doc.data().header
-          this.d = doc.data().donation
-          this.$http.get('https://api.twitch.tv/kraken/streams/'+doc.data().twitch+'?&client_id='+this.$clientId)
+          this.$http.get('https://api.twitch.tv/kraken/streams/'+this.config.twitch+'?&client_id='+this.$clientId)
             .then(function(response){
               if(response.body.stream == null)
                 {
@@ -65,12 +63,12 @@ export default {
               }
             })
             this.$nextTick(() => {
-              if(this.isImage(doc.data().header)){
+              if(this.isImage(this.config.header)){
                 this.headerImg = true
               } else {
                 this.headerImg = false
               }
-              if(doc.data().giveawayurl == null || doc.data().giveawayurl == 'false') {
+              if(this.config.giveawayurl == null || this.config.giveawayurl == 'false') {
                 this.ga = false
               } else {
                 this.ga = true
@@ -78,6 +76,7 @@ export default {
             })
         })
       })
+    }
     },
     isImage(input) {
         if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(input)) {
@@ -85,18 +84,7 @@ export default {
         } else { // input is not an image
             return false
         }
-    },
-    // fetchSocial(){
-    //   db.collection('social').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
-    //     querySnapshot.forEach((doc) => {
-    //       const social = {
-    //         icon : doc.data().icon,
-    //         url : doc.data().url
-    //       }
-    //       this.social.push(social)
-    //     })
-    //   })
-    // },
+    }
   },
   created: function(){
     this.fetchInfo()
@@ -121,16 +109,15 @@ hr {
   grid-template-areas: "text giveaway donation status";
   width: 100%;
 }
-.header > h1 {
+.logo {
+  margin: 2.5em 0 0 0;
+  display: flex;
   grid-area: text;
-  text-align: left;
   color: #ecf0f1;
-  margin: 56px 0 0 40px;
   display: inline;
 }
 
-.header > img {
-  margin: 32px 0 0 32px;
+.logo > img {
   display: inline;
 }
 
@@ -224,17 +211,22 @@ hr {
 
 @media only screen and (max-width:800px) {
   .header {
-    grid-template-areas: "text text text" "status donation giveaway";
+    grid-template-areas: "text text" "status status" "donation giveaway";
     grid-gap: 0;
   }
-  .header > h1 {
-    margin-bottom: 0.5em;
-    text-align: center;
+  .logo {
+    justify-content: center;
+  }
+  .logo > h1 {
+    margin-bottom: 1em;
+  }
+  .logo > img {
+    margin: 1em 0 1em 0;
   }
   .status {
     justify-content: center;
   }
-  #offline{
+  #offline {
     margin: 0 1em 0 1em;
   }
 
@@ -245,7 +237,7 @@ hr {
     grid-template-areas: "text text" "status status" "giveaway donation";
     grid-gap: 0;
   }
-  .header > h1 {
+  .logo > h1 {
     margin-bottom: 1em;
   }
   #offline {

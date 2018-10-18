@@ -1,7 +1,7 @@
 <template>
     <div class="twitter" v-if="show">
-      <div class="section-header" v-bind:style="{background: colors.titleBg}">
-        <h1 v-bind:style="{color: colors.titleText}">Twitter</h1>
+      <div class="section-header" v-bind:style="{background: config.titleBg}">
+        <h1 v-bind:style="{color: config.titleText}">Twitter</h1>
       </div>
       <Timeline :id="t" :sourceType="'profile'" :widget-class="`twitter-timeline-settings`" :options="{ tweetLimit: '5', theme: 'dark' }"><div class="lds-dual-ring"></div></Timeline>
       <!-- <a data-height="400" data-theme="dark" href="https://twitter.com/twitterdev">Tweets</a> -->
@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import db from './firebaseInit'
+import db from '../firebaseInit'
 
 export default {
-  props: ['colors', 'social'],
+  props: ['config', 'social'],
   name: 'Twitter',
   data() {
     return {
@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     fetchTwitter() {
-      db.collection('streamers').where('streamer_id', '==', this.$streamerId).get().then(querySnapshot => {
+      if(this.config.registered == 'true'){
+      db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
         querySnapshot.forEach((doc) => {
           this.t = doc.data().twitter
           this.$nextTick(() => {
@@ -31,6 +32,7 @@ export default {
         })
       })
     }
+  }
   },
   created: function(){
     this.fetchTwitter()
