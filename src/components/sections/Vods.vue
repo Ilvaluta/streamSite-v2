@@ -5,8 +5,8 @@
   </div>
     <div v-for="vod in v" class="video-wrapper">
       <div class="video">
-        <a :href="vod.url">
-          <img :src="vod.preview"/>
+        <a :href="vod.url" :aria-label="vod.title">
+          <img :src="vod.preview" />
         </a>
         <div class="video-title" v-bind:style="{background: config.titleBg}">
           <h4 v-bind:style="{color: config.titleText}">{{vod.title}}</h4>

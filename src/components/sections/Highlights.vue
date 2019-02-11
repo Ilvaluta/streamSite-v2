@@ -5,7 +5,7 @@
   </div>
   <div v-for="highlight in h" class="video-wrapper">
     <div class="video">
-      <a :href="highlight.url">
+      <a :href="highlight.url" :aria-label="highlight.title">
           <img :src="highlight.thumbnails[0].url"/>
         </a>
       <div class="video-title" v-bind:style="{background: config.titleBg}">

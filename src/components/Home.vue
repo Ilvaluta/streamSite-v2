@@ -25,6 +25,7 @@ import Sponsors from './sections/Sponsors'
 import Footer from './sections/Footer'
 import Instagram from './sections/Instagram'
 import Twitter from './sections/Twitter'
+import noStream from './sections/noStream'
 import GiveawayModal from './modal/Giveaway.vue'
 
 
@@ -42,8 +43,6 @@ export default {
         socialIcon: '',
         socialText: '',
         twitch: '',
-        youtube: 'UCkRfArvrzheW2E7b6SVT7vQ',
-        twitter: '',
         header: '',
         donation: '',
         giveawayurl: '',
@@ -51,9 +50,8 @@ export default {
         showVods: true,
         showYt: true,
         showSponsors: true,
-        showInstagram: 'true',
         vidsNum: '4',
-        registered: 'false',
+        registered: '',
         uid: '',
       },
     }
@@ -85,11 +83,22 @@ export default {
                     this.config.showVods = doc.data().vods
                     this.config.showSponsors = doc.data().sponsors
                     this.config.showHighlights = doc.data().highlights
-                    this.config.twitter = doc.data().twitter
+                    // if(doc.data().twitter != null || doc.data().twitter != ''){
+                    //   this.config.showTwitter = true
+                    //   this.config.twitter = doc.data().twitter
+                    // } else {
+                    //   this.config.showTwitter = false
+                    // }
                     this.config.header = doc.data().header
                     this.config.donation = doc.data().donation
                     this.config.vidsNum = doc.data().vids_num
                     this.config.giveawayurl = doc.data().giveawayurl
+                    // if(doc.data().instagram != null || doc.data().instagram != ''){
+                    //   this.config.showInsta = true
+                    //   this.config.instaToken = doc.data().instagram
+                    // } else {
+                    //   this.config.showInsta = true
+                    // }
                   })
                 })
               // })
@@ -112,6 +121,7 @@ export default {
     'Twitter': Twitter,
     'Vods': Vods,
     'Youtube': Youtube,
+    'noStream': noStream,
     'GiveawayModal': GiveawayModal
   }
 }

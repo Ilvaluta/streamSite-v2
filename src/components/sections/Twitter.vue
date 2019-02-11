@@ -3,7 +3,9 @@
       <div class="section-header" v-bind:style="{background: config.titleBg}">
         <h1 v-bind:style="{color: config.titleText}">Twitter</h1>
       </div>
-      <Timeline :id="t" :sourceType="'profile'" :widget-class="`twitter-timeline-settings`" :options="{ tweetLimit: '5', theme: 'dark' }"><div class="lds-dual-ring"></div></Timeline>
+        <Timeline :id="twitter" :sourceType="'profile'" :widget-class="`twitter-timeline-settings`" :options="{ tweetLimit: '5', theme: 'dark' }">
+          <div class="lds-dual-ring"></div>
+        </Timeline>
       <!-- <a data-height="400" data-theme="dark" href="https://twitter.com/twitterdev">Tweets</a> -->
     </div>
 </template>
@@ -16,23 +18,28 @@ export default {
   name: 'Twitter',
   data() {
     return {
-      show: false,
-      t: ''
+      show: '',
+      twitter: ''
     }
   },
   methods: {
     fetchTwitter() {
-      if(this.config.registered == 'true'){
-      db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          this.t = doc.data().twitter
-          this.$nextTick(() => {
-            this.show = true
+      let streamer = this.$route.params.streamer
+      let uid
+      if (streamer != null | streamer != '' | streamer != '#') {
+        db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
+          querySnapshot.forEach((doc) => {
+            uid = doc.data().uid
+            db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
+              querySnapshot.forEach((doc) => {
+                this.twitter = doc.data().twitter
+                this.show = 'true'
+              })
+            })
           })
         })
-      })
+      }
     }
-  }
   },
   created: function(){
     this.fetchTwitter()

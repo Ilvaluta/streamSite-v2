@@ -117,8 +117,8 @@ export default {
 }
 
 .twitter > .section-header {
-  margin-right: 16px;
-  margin-bottom: -2px;
+  margin-right: 18px;
+  margin-bottom: -4px;
   z-index: 9;
   position: relative;
 }

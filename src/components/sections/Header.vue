@@ -5,16 +5,16 @@
     <h1 v-else v-bind:style="{color: config.headerText}">{{config.header}}</h1>
   </div>
     <div class="giveaway" v-show="ga">
-      <a @click="$modal.show('ga-modal')" v-bind:style="{color: config.socialIcon}"><i class="fas fa-4x fa-gift"></i></a>
+      <a @click="$modal.show('ga-modal')" v-bind:style="{color: config.socialIcon}" aria-label="Giveaway"><i class="fas fa-4x fa-gift"></i></a>
       <h5 v-bind:style="{color: config.socialText}">Giveaway</h5>
     </div>
     <div class="donation">
-      <a :href="d" target="_blank" v-bind:style="{color: config.socialIcon}"><i class="fas fa-4x fa-donate"></i></a>
+      <a :href="config.donation" target="_blank" v-bind:style="{color: config.socialIcon}" aria-label="Donation"><i class="fas fa-4x fa-donate"></i></a>
       <h5 v-bind:style="{color: config.socialText}">Donate</h5>
     </div>
     <div class="status" :class="{ live : isLive }">
       <div id="online" v-if="isLive">
-        <a :href="'http://twitch.tv/' + twitch" target="_blank">
+        <a :href="'http://twitch.tv/' + config.twitch" target="_blank" aria-label="Twitch">
           <img :src="img" />
         </a>
         <hr>
@@ -40,7 +40,6 @@ export default {
       viewers: '',
       img: '',
       headerImg: false,
-      d: '',
       ga: true,
     }
   },
