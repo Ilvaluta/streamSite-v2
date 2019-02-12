@@ -1,12 +1,12 @@
 {
   "name": "streamsite",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "",
+  "description": "Streamsite - Personal websites for streamers",
+  "author": "Ilvaluta",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "node server.js",
+    "start": "npm start",
     "build": "node build/build.js"
   },
   "dependencies": {
