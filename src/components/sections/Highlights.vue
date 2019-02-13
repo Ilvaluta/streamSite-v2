@@ -1,5 +1,5 @@
 <template>
-<div class="highlights" v-show="config.showHighlights">
+<div class="highlights" v-show="config.showHighlights" v-bind:style="{background: config.sectionBg}">
   <div class="section-header" v-bind:style="{background: config.titleBg}">
     <h1 v-bind:style="{color: config.titleText}">Previous Highlights</h1>
   </div>

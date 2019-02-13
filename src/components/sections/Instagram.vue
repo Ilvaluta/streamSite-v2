@@ -1,5 +1,5 @@
 <template>
-<div class="instagram" v-if="show">
+<div class="instagram" v-if="show" v-bind:style="{background: config.sectionBg}">
   <div class="section-header" v-bind:style="{background: config.titleBg}">
     <h1 v-bind:style="{color: config.titleText}">Instagram</h1>
   </div>
@@ -60,7 +60,6 @@ export default {
 .insta-card {
   padding: 8px;
   margin: 8px;
-  background: #121212;
   display: inline-block;
 }
 

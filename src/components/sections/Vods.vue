@@ -1,5 +1,5 @@
 <template>
-  <div class="vods" v-show="config.showVods">
+  <div class="vods" v-show="config.showVods" v-bind:style="{background: config.sectionBg}">
     <div class="section-header" v-bind:style="{background: config.titleBg}">
     <h1 v-bind:style="{color: config.titleText}">Previous Broadcasts</h1>
   </div>

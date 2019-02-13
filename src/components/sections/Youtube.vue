@@ -1,5 +1,5 @@
 <template>
-<div class="youtube" v-if="config.showYt">
+<div class="youtube" v-if="config.showYt" v-bind:style="{background: config.sectionBg}">
   <div class="section-header" v-bind:style="{background: config.titleBg}">
   <h1 v-bind:style="{color: config.titleText}">Latest YT Vids</h1>
 </div>

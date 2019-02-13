@@ -40,6 +40,7 @@ export default {
         titleText: '',
         headerBg: '',
         headerText: '',
+        sectionBg: '',
         socialIcon: '',
         socialText: '',
         twitch: '',
@@ -73,6 +74,7 @@ export default {
                     this.config.headerText = doc.data().headerText
                     this.config.socialIcon = doc.data().socialIcon
                     this.config.socialText = doc.data().socialText
+                    this.config.sectionBg = doc.data().sectionBg
                     this.bg = 'url('+doc.data().bg+')'
                   })
                 })

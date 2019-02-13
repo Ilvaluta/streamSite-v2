@@ -55,17 +55,16 @@ export default {
 .highlights, .youtube
 {
   margin: 32px 6% 32px 6%;
-  background: rgb(48, 48, 48);
   border-radius: 4px;
 }
 
 .section-header{
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  margin-bottom: 8px;
 }
 
 .instagram {
-  background: rgb(48, 48, 48);
   border-radius: 4px;
 }
 
@@ -83,6 +82,7 @@ export default {
 .video>a>img {
   border-right: 16px solid black;
   border-left: 16px solid black;
+  border-radius: 16px 16px 0 0;
 }
 
 .video-wrapper {
@@ -92,6 +92,7 @@ export default {
 .video-title {
   margin-top: -8px;
   max-width: 352px;
+  border-radius: 0 0 16px 16px;
 }
 
 .video-title>h4 {
@@ -117,7 +118,7 @@ export default {
 }
 
 .twitter > .section-header {
-  margin-right: 18px;
+  margin-right: 17px;
   margin-bottom: -4px;
   z-index: 9;
   position: relative;
@@ -176,7 +177,7 @@ export default {
     margin-top: -6px;
   }
   .twitter > .section-header {
-    margin-right: 0;
+    margin-right: 18px;
   }
 
 }

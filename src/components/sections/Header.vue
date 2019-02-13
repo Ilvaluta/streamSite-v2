@@ -117,6 +117,7 @@ hr {
 }
 
 .logo > img {
+  margin-top: 24px;
   display: inline;
 }
 
@@ -148,6 +149,11 @@ hr {
 .giveaway {
   grid-area: giveaway;
 }
+
+.giveaway > a {
+  cursor: pointer;
+}
+
 
 .donation, .giveaway {
   margin: 32px;
