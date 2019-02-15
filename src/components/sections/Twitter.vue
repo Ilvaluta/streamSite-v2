@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       show: '',
-      twitter: ''
+      twitter: 'twitch'
     }
   },
   methods: {
@@ -32,8 +32,12 @@ export default {
             uid = doc.data().uid
             db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
               querySnapshot.forEach((doc) => {
-                this.twitter = doc.data().twitter
-                this.show = 'true'
+                if(doc.data().twitter == null || doc.data().twitter == ''){
+                  this.show = false
+                } else {
+                  this.show = true
+                  this.twitter = doc.data().twitter
+                }
               })
             })
           })

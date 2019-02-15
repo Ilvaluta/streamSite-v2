@@ -115,6 +115,7 @@ export default {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  margin-left: 16px;
 }
 
 .twitter > .section-header {
@@ -160,6 +161,7 @@ export default {
 
 .sponsorImage {
   grid-area: image;
+  margin-bottom: -5px
 }
 
 .sponsorText {

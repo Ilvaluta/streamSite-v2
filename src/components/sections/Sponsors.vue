@@ -8,7 +8,7 @@
         <div class="sponsorImage">
           <a :href="sponsor.url" :aria-label="sponsor.text"><img :src="sponsor.img" /></a>
         </div>
-        <h4 v-bind:style="{color: config.titleText}">{{sponsor.text}}</h4>
+        <h4 v-bind:style="{color: config.titleText, background: config.sectionBg}">{{sponsor.text}}</h4>
       </div>
     </div>
 </div>

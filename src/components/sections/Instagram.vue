@@ -3,6 +3,7 @@
   <div class="section-header" v-bind:style="{background: config.titleBg}">
     <h1 v-bind:style="{color: config.titleText}">Instagram</h1>
   </div>
+  <div class="insta-wrapper">
   <vue-instagram :token="instaToken" :count="5" mediaType="image">
     <template slot="feeds" slot-scope="props">
       <div class="insta-card">
@@ -15,6 +16,7 @@
       </div>
     </template>
   </vue-instagram>
+    </div>
 </div>
 </template>
 
@@ -40,8 +42,12 @@ export default {
             uid = doc.data().uid
             db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
               querySnapshot.forEach((doc) => {
-                this.instaToken = doc.data().instagram
-                this.show = 'true'
+                if(doc.data().instagram == null || doc.data().instagram == ''){
+                  this.show = false
+                } else {
+                  this.show = true
+                  this.instaToken = doc.data().instagram
+                }
               })
             })
           })
@@ -57,15 +63,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.insta-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .insta-card {
-  padding: 8px;
-  margin: 8px;
   display: inline-block;
+  margin: 16px;
+  padding: 4px;
+  max-height: 184px;
+  max-width: 184px;
 }
 
 .insta-card>.insta-image {
-  max-height: 50%;
-  max-width: 50%;
+  max-height: 160px;
+  max-width: 160px;
 }
 
 .insta-footer>.footer-item {

@@ -43,6 +43,7 @@ export default {
         sectionBg: '',
         socialIcon: '',
         socialText: '',
+        title: '',
         twitch: '',
         header: '',
         donation: '',
@@ -85,22 +86,10 @@ export default {
                     this.config.showVods = doc.data().vods
                     this.config.showSponsors = doc.data().sponsors
                     this.config.showHighlights = doc.data().highlights
-                    // if(doc.data().twitter != null || doc.data().twitter != ''){
-                    //   this.config.showTwitter = true
-                    //   this.config.twitter = doc.data().twitter
-                    // } else {
-                    //   this.config.showTwitter = false
-                    // }
                     this.config.header = doc.data().header
                     this.config.donation = doc.data().donation
                     this.config.vidsNum = doc.data().vids_num
                     this.config.giveawayurl = doc.data().giveawayurl
-                    // if(doc.data().instagram != null || doc.data().instagram != ''){
-                    //   this.config.showInsta = true
-                    //   this.config.instaToken = doc.data().instagram
-                    // } else {
-                    //   this.config.showInsta = true
-                    // }
                   })
                 })
               // })
@@ -113,6 +102,7 @@ export default {
   },
   created: function() {
     this.fetchConfig()
+    document.title = this.config.title
   },
   components: {
     'Header': Header,

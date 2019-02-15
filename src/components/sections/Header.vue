@@ -117,7 +117,7 @@ hr {
 }
 
 .logo > img {
-  margin-top: 24px;
+  margin-top: 16px;
   display: inline;
 }
 
