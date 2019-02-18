@@ -61,5 +61,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.video {
+  padding: 0 16px 16px 16px;
+}
 
+.video>a>img {
+  border: 16px solid black;
+  border-radius: 16px 16px 0 0;
+}
 </style>

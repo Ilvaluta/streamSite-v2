@@ -1,6 +1,8 @@
 <template>
   <div class="noStream">
-    <h1>No Streamer</h1>
+    <div class="container">
+      <h1>No Streamer Specified</h1>
+    </div>
   </div>
 </template>
 
@@ -16,5 +18,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.container {
+  margin-left: 15%;
+  margin-right: 15%;
+}
 </style>

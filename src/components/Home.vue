@@ -1,5 +1,5 @@
 <template>
-<div class="home" v-bind:style="{background: bg}">
+<div class="home" v-bind:style="{background: bg}" v-if="config.registered">
   <Header v-bind:config="config" />
   <GiveawayModal v-bind:config="config"/>
   <div class="social-embeds">
@@ -11,6 +11,9 @@
   <Youtube v-bind:config="config" />
   <Sponsors v-bind:config="config" />
   <Footer />
+</div>
+<div class="no-user" v-else>
+  <h1>No User</h1>
 </div>
 </template>
 
@@ -25,7 +28,6 @@ import Sponsors from './sections/Sponsors'
 import Footer from './sections/Footer'
 import Instagram from './sections/Instagram'
 import Twitter from './sections/Twitter'
-import noStream from './sections/noStream'
 import GiveawayModal from './modal/Giveaway.vue'
 
 
@@ -113,7 +115,6 @@ export default {
     'Twitter': Twitter,
     'Vods': Vods,
     'Youtube': Youtube,
-    'noStream': noStream,
     'GiveawayModal': GiveawayModal
   }
 }
