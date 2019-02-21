@@ -13,7 +13,7 @@
   <Footer />
 </div>
 <div class="no-user" v-else>
-  <h1>No User</h1>
+  <noUser />
 </div>
 </template>
 
@@ -28,6 +28,7 @@ import Sponsors from './sections/Sponsors'
 import Footer from './sections/Footer'
 import Instagram from './sections/Instagram'
 import Twitter from './sections/Twitter'
+import noUser from './sections/noUser'
 import GiveawayModal from './modal/Giveaway.vue'
 
 
@@ -115,6 +116,7 @@ export default {
     'Twitter': Twitter,
     'Vods': Vods,
     'Youtube': Youtube,
+    'noUser': noUser,
     'GiveawayModal': GiveawayModal
   }
 }

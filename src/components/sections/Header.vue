@@ -161,16 +161,8 @@ hr {
 
 .donation > h5, .giveaway > h5 {
   margin: 4px 0 0 0;
-  color: #ecf0f1;
-}
-
-.donation > a, .giveaway > a{
- color: #ecf0f1;
-}
-
-.donation > a:hover, .giveaway > a:hover {
-  transition: all 0.2s ease-in-out;
-  color: #222;
+  font-weight: 500;
+  letter-spacing: 0.25px;
 }
 
 .status {
@@ -205,12 +197,16 @@ hr {
 
 #offline {
   align-self: center;
-  color: #C91F37;
   padding: 16px;
   margin-right: 80px;
-  font-weight: bold;
   background: #D2D7D3;
   border-radius: 4px;
+}
+
+#offline > h3 {
+  color: #C91F37;
+  font-weight: 400;
+  letter-spacing: 0.25px;
 }
 
 

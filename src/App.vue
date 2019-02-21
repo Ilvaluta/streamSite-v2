@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
 #app {
   width: 100%;
@@ -38,11 +38,12 @@ export default {
   color: #2c3e50;
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 #app h1 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 /* Temporary fix to get Header to the top of page for now */
@@ -97,6 +98,8 @@ export default {
 
 .video-title>h4 {
   padding: 8px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
 }
 
 .social-embeds {
