@@ -29,28 +29,20 @@ export default {
   },
   methods: {
     fetchYoutube() {
-      let streamer = this.$route.params.streamer
       let uid
       let yt
       let nums
-      if (streamer != null | streamer != '' | streamer != '#') {
-        db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
-          querySnapshot.forEach((doc) => {
-            uid = doc.data().uid
-            db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
-              querySnapshot.forEach((doc) => {
-                yt = doc.data().youtube
-                nums = doc.data().vids_num
-                this.show = doc.data().showYt
-                this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' + yt +'&maxResults='+nums+'&order=date&key=AIzaSyBfR3-RIp2rkLTPm3tszJ_e_0N1KUYPCUE')
-                  .then(function(response) {
-                  this.ytVids = response.body.items
-                  })
-              })
+      db.collection('streamers').doc(this.config.uid)
+      .get()
+      .then(doc => {
+          yt = doc.data().youtube
+          nums = doc.data().vids_num
+          this.show = doc.data().showYt
+          this.$http.get('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' + yt +'&maxResults='+nums+'&order=date&key=AIzaSyBfR3-RIp2rkLTPm3tszJ_e_0N1KUYPCUE')
+            .then(function(response) {
+            this.ytVids = response.body.items
             })
-          })
-        })
-      }
+      })
   }
   },
   created: function() {

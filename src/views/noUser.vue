@@ -31,6 +31,7 @@ export default {
   methods: {
   },
   created: function() {
+    document.title = 'StreamSite - User not found'
   }
 }
 </script>

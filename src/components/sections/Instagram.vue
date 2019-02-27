@@ -34,25 +34,16 @@ export default {
   },
   methods: {
     fetchToken() {
-      let streamer = this.$route.params.streamer
-      let uid
-      if (streamer != null | streamer != '' | streamer != '#') {
-        db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
-          querySnapshot.forEach((doc) => {
-            uid = doc.data().uid
-            db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
-              querySnapshot.forEach((doc) => {
+            db.collection('streamers').doc(this.config.uid)
+            .get()
+            .then(doc => {
                 if(doc.data().instagram == null || doc.data().instagram == ''){
                   this.show = false
                 } else {
                   this.show = true
                   this.instaToken = doc.data().instagram
                 }
-              })
             })
-          })
-        })
-      }
     }
   },
   created: function() {

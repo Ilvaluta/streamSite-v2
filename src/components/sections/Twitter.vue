@@ -14,36 +14,27 @@
 import db from '../firebaseInit'
 
 export default {
-  props: ['config', 'social'],
+  props: ['config'],
   name: 'Twitter',
   data() {
     return {
       show: '',
-      twitter: 'twitch'
+      twitter: ''
     }
   },
   methods: {
     fetchTwitter() {
-      let streamer = this.$route.params.streamer
-      let uid
-      if (streamer != null | streamer != '' | streamer != '#') {
-        db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
-          querySnapshot.forEach((doc) => {
-            uid = doc.data().uid
-            db.collection('streamers').where('streamer_id', '==', uid).get().then(querySnapshot => {
-              querySnapshot.forEach((doc) => {
+            db.collection('streamers').doc(this.config.uid)
+            .get()
+            .then(doc => {
                 if(doc.data().twitter == null || doc.data().twitter == ''){
                   this.show = false
                 } else {
                   this.show = true
                   this.twitter = doc.data().twitter
                 }
-              })
             })
-          })
-        })
-      }
-    }
+          }
   },
   created: function(){
     this.fetchTwitter()

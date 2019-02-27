@@ -24,6 +24,7 @@ export default {
   methods: {
   },
   created: function() {
+    document.title = 'Streamsite - Personal website for streamers'
   }
 }
 </script>

@@ -1,8 +1,7 @@
 <template>
   <div class="header" v-bind:style="{background: config.headerBg}">
     <div class="logo">
-    <img :src="config.header" v-if="headerImg">
-    <h1 v-else v-bind:style="{color: config.headerText}">{{config.header}}</h1>
+    <img :src="config.header">
   </div>
     <div class="giveaway" v-show="ga">
       <a @click="$modal.show('ga-modal')" v-bind:style="{color: config.socialIcon}" aria-label="Giveaway"><i class="fas fa-4x fa-gift"></i></a>
@@ -39,15 +38,17 @@ export default {
       game: '',
       viewers: '',
       img: '',
-      headerImg: false,
-      ga: true,
+      // headerImg: '',
+      ga: '',
     }
   },
   methods: {
+    //Fetch info from Streamers with the doc ref equal to the uid of the current URL
     fetchInfo(){
-      if(this.config.registered == 'true'){
-      db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
+      db.collection('streamers').doc(this.config.uid)
+      .get()
+      .then(doc => {
+        //Check to see if streamer is currently live, if live set isLive to true and show relative info, if not set isLive to false
           this.$http.get('https://api.twitch.tv/kraken/streams/'+this.config.twitch+'?&client_id='+this.$clientId)
             .then(function(response){
               if(response.body.stream == null)
@@ -62,28 +63,24 @@ export default {
               }
             })
             this.$nextTick(() => {
-              if(this.isImage(this.config.header)){
-                this.headerImg = true
-              } else {
-                this.headerImg = false
-              }
+              //Check if giveaway is empty or false, if empty or false don't show giveaway icon
               if(this.config.giveawayurl == null || this.config.giveawayurl == 'false') {
                 this.ga = false
               } else {
                 this.ga = true
               }
             })
-        })
       })
-    }
     },
-    isImage(input) {
-        if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(input)) {
-            return true
-        } else { // input is not an image
-            return false
-        }
-    }
+    //Currently only accepting image logos in header, will add text in future.  Saving method until then.
+    //
+    // isImage(input) {
+    //     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(input)) {
+    //         return true
+    //     } else { // input is not an image
+    //         return false
+    //     }
+    // }
   },
   created: function(){
     this.fetchInfo()
@@ -120,27 +117,6 @@ hr {
   margin-top: 16px;
   display: inline;
 }
-
-/* .social {
-  text-align: center;
-  list-style: none;
-  margin: 32px;
-}
-
-.social > li {
-  display: inline-block;
-  padding: 0 8px 0 8px;
-}
-.social > li > a {
-  color: #ecf0f1;
-  text-decoration: none;
-  font-size: 4em;
-}
-
-.social > li > a:hover {
-  transition: all 0.2s ease-in-out;
-  color: #222;
-} */
 
 .donation {
   grid-area: donation;
@@ -189,6 +165,7 @@ hr {
   margin: 0;
   color: #333;
   text-decoration: none;
+  font-weight: 400;
 }
 
 #online >a > img {

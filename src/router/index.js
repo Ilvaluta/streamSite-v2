@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase/app'
-import Home from '@/components/Home'
-import noStream from '@/components/noStream'
+import noStream from '@/views/noStream'
+import noUser from '@/views/noUser'
+import Check from '@/views/Check'
+import Home from '@/views/Home'
 
 Vue.use(Router)
 
- export default new Router({
+let router = new Router({
   mode: 'history',
   routes: [
     {
@@ -16,8 +18,20 @@ Vue.use(Router)
     },
     {
       path: '/:streamer',
-      name: 'Home',
-      component: Home,
-    }
+      name: 'Check',
+      component: Check,
+    },
+    {
+      path: '/nouser',
+      name: 'noUser',
+      component: noUser,
+    },
+    // {
+    //   path: '/test',
+    //   name: 'Test',
+    //   component: Test,
+    // }
   ]
 })
+
+export default router

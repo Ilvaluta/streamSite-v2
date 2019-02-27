@@ -1,5 +1,5 @@
 <template>
-<div class="home" v-bind:style="{background: bg}" v-if="config.registered">
+<div class="home" v-bind:style="{background: bg}">
   <Header v-bind:config="config" />
   <GiveawayModal v-bind:config="config"/>
   <div class="social-embeds">
@@ -12,28 +12,25 @@
   <Sponsors v-bind:config="config" />
   <Footer />
 </div>
-<div class="no-user" v-else>
-  <noUser />
-</div>
 </template>
 
 <script>
-import db from './firebaseInit'
+import db from '@/components/firebaseInit'
 
-import Header from './sections/Header'
-import Vods from './sections/Vods'
-import Highlights from './sections/Highlights'
-import Youtube from './sections/Youtube'
-import Sponsors from './sections/Sponsors'
-import Footer from './sections/Footer'
-import Instagram from './sections/Instagram'
-import Twitter from './sections/Twitter'
-import noUser from './sections/noUser'
-import GiveawayModal from './modal/Giveaway.vue'
+import Header from '@/components/sections/Header'
+import Vods from '@/components/sections/Vods'
+import Highlights from '@/components/sections/Highlights'
+import Youtube from '@/components/sections/Youtube'
+import Sponsors from '@/components/sections/Sponsors'
+import Footer from '@/components/sections/Footer'
+import Instagram from '@/components/sections/Instagram'
+import Twitter from '@/components/sections/Twitter'
+import GiveawayModal from '@/components/modal/Giveaway.vue'
 
 
 
 export default {
+  props: ['streamer'],
   name: 'Home',
   data() {
     return {
@@ -46,7 +43,6 @@ export default {
         sectionBg: '',
         socialIcon: '',
         socialText: '',
-        title: '',
         twitch: '',
         header: '',
         donation: '',
@@ -56,22 +52,18 @@ export default {
         showYt: true,
         showSponsors: true,
         vidsNum: '4',
-        registered: '',
         uid: '',
       },
     }
   },
   methods: {
     fetchConfig() {
-      let streamer = this.$route.params.streamer
-        if (streamer != null | streamer != '' | streamer != '#') {
-          db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
-            querySnapshot.forEach((doc) => {
-              this.config.registered = 'true'
-              this.config.uid = doc.data().uid
+                this.config.uid = this.streamer.uid
               // this.$nextTick(() => {
-                db.collection('colors').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
-                  querySnapshot.forEach((doc) => {
+                db.collection('colors').doc(this.streamer.uid)
+                .get()
+                .then(doc => {
+                  if (doc.exists) {
                     this.config.titleBg = doc.data().titleBg
                     this.config.titleText = doc.data().titleText
                     this.config.headerBg = doc.data().headerBg
@@ -80,10 +72,12 @@ export default {
                     this.config.socialText = doc.data().socialText
                     this.config.sectionBg = doc.data().sectionBg
                     this.bg = 'url('+doc.data().bg+')'
-                  })
+                  }
                 })
-                db.collection('streamers').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
-                  querySnapshot.forEach((doc) => {
+                db.collection('streamers').doc(this.streamer.uid)
+                .get()
+                .then(doc => {
+                  if (doc.exists) {
                     this.config.twitch = doc.data().twitch
                     this.config.showYt = doc.data().showYt
                     this.config.showVods = doc.data().vods
@@ -93,19 +87,13 @@ export default {
                     this.config.donation = doc.data().donation
                     this.config.vidsNum = doc.data().vids_num
                     this.config.giveawayurl = doc.data().giveawayurl
-                  })
+                  }
                 })
               // })
-            })
-          })
-        } else {
-          this.registered = 'false'
-        }
     },
   },
   created: function() {
     this.fetchConfig()
-    document.title = this.config.title
   },
   components: {
     'Header': Header,
@@ -116,7 +104,6 @@ export default {
     'Twitter': Twitter,
     'Vods': Vods,
     'Youtube': Youtube,
-    'noUser': noUser,
     'GiveawayModal': GiveawayModal
   }
 }

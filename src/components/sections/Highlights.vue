@@ -29,14 +29,12 @@ export default {
   },
   methods: {
     fetchHighlights() {
-      if (this.config.registered == 'true') {
         if (this.config.showHighlights == 'true') {
           this.$http.get('https://api.twitch.tv/kraken/channels/' + this.config.twitch + '/videos?clips=true&limit=' + this.config.vidsNum + '&client_id=' + this.$clientId)
             .then(function(response) {
               this.h = response.body.videos
             });
         }
-      }
     }
   },
   created: function() {

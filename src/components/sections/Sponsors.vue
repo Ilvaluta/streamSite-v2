@@ -27,13 +27,7 @@ export default {
   },
   methods: {
     fetchSponsors() {
-      let streamer = this.$route.params.streamer
-      let uid
-      if (streamer != null | streamer != '' | streamer != '#') {
-        db.collection('su').where('twitch', '==', streamer).get().then(querySnapshot => {
-          querySnapshot.forEach((doc) => {
-            uid = doc.data().uid
-            db.collection('sponsors').where('streamer_id', '==', uid).get().then(querySnapshot => {
+            db.collection('sponsors').where('streamer_id', '==', this.config.uid).get().then(querySnapshot => {
               querySnapshot.forEach((doc) => {
                 const sponsor = {
                   'id': doc.id,
@@ -45,9 +39,6 @@ export default {
                 this.s.push(sponsor)
               })
             })
-          })
-        })
-      }
     },
   },
   created: function() {
