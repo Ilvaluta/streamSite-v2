@@ -114,7 +114,6 @@ hr {
 }
 
 .logo > img {
-  margin-top: 16px;
   display: inline;
 }
 

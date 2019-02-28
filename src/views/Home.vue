@@ -94,6 +94,7 @@ export default {
   },
   created: function() {
     this.fetchConfig()
+    document.title = this.streamer.username + ' - Streamsite'
   },
   components: {
     'Header': Header,
