@@ -1,13 +1,14 @@
 <template>
   <div class="check">
+    <!-- If registered is true, show Home component, if false show noStream component -->
     <Home v-if="registered === 'true'" :streamer="streamer"/>
-    <noStream v-else-if="registered === 'false'" />
+    <noUser v-else-if="registered === 'false'" />
   </div>
 </template>
 
 <script>
 import db from '@/components/firebaseInit'
-import noStream from '@/views/noStream'
+import noUser from '@/views/noUser'
 import Home from '@/views/Home'
 
 export default {
@@ -23,8 +24,10 @@ export default {
   },
   methods: {
     checkReg() {
+      //Get the :streamer parameter from URL and check a doc exists in DB
       let streamer = this.$route.params.streamer
       if (streamer != null | streamer != '' | streamer != '#') {
+        //If :streamer isn't empty and exists in database, set registered variable to true
         db.collection('su').doc(streamer)
         .get()
         .then(doc => {
@@ -33,13 +36,14 @@ export default {
             this.streamer.uid = doc.data().uid
             this.registered = 'true'
           } else {
+            //Not registerd, set var to false
             this.registered = 'false'
           }
 
         })
       } else {
+        //Streamer param is empty, set var to false
         this.registered = 'false'
-        console.log('False no doc')
       }
     }
   },
@@ -47,7 +51,7 @@ export default {
     this.checkReg()
   },
   components: {
-    'noStream' : noStream,
+    'noUser' : noUser,
     'Home' : Home
   }
 }

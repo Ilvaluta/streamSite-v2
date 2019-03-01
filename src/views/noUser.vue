@@ -66,8 +66,8 @@ export default {
 } */
 
 .main-text {
-  margin-right: 24%;
-  margin-left: 24%;
+  margin-right: 16%;
+  margin-left: 16%;
   margin-top: 64px;
   padding: 2rem;
   border-radius: .25rem;
@@ -105,6 +105,15 @@ export default {
 
 .cases {
   line-height: 1.5rem;
+}
+
+@media only screen and (max-width:560px) {
+  .main-text {
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: 64px;
+  }
+
 }
 
 </style>
