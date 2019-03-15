@@ -80,9 +80,9 @@ export default {
   padding: 0 16px 16px 16px;
 }
 
+
 .video>a>img {
-  border-right: 16px solid black;
-  border-left: 16px solid black;
+  border: 16px solid black;
   border-radius: 16px 16px 0 0;
 }
 
@@ -173,7 +173,7 @@ export default {
 
 @media only screen and (max-width:440px) {
   .video>a>img {
-    border-right: 32px solid black;
+    border-right: 26px solid black;
     border-left: 32px solid black;
     height: 80%;
     width: 80%;
