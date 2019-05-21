@@ -3,7 +3,7 @@
     <div v-for="sponsor in s" class="wrapper">
       <div class="sponsor">
         <div class="sponsorHeader" v-bind:style="{background: config.titleBg}">
-          <h1 v-bind:style="{color: config.titleText}">G2A</h1>
+          <h1 v-bind:style="{color: config.titleText}"></h1>
         </div>
         <div class="sponsorImage">
           <a :href="sponsor.url" :aria-label="sponsor.text"><img :src="sponsor.img" /></a>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import gleam from '@/plugins/gleam.js'
 import db from '../firebaseInit'
 
 export default {

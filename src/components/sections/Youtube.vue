@@ -3,7 +3,7 @@
   <div class="section-header" v-bind:style="{background: config.titleBg}">
   <h1 v-bind:style="{color: config.titleText}">Latest YT Vids</h1>
 </div>
-  <div v-for="vid in ytVids" class="video-wrapper" v-bind:key="vid">
+  <div v-for="vid in ytVids" class="video-wrapper">
     <div class="video">
       <a :href="'https://youtube.com/watch?v=' + vid.id.videoId" target="_blank" :aria-label="vid.snippet.title">
           <img :src="vid.snippet.thumbnails.medium.url"/>
